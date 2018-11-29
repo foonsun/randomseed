@@ -1,0 +1,2 @@
+# randomseed
+random seed test.

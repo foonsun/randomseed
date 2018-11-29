@@ -31,20 +31,32 @@ uint8_t compute_random_roll(unsigned char* seed1, unsigned char* seed2, uint8_t 
     size_t hash = 0;
     hash_combine(hash, to_hex((char *)seed1, sizeof(seed1)));
     hash_combine(hash, to_hex((char *)seed2, sizeof(seed2)));
-
     random_roll[0] = hash % 6 + 1;
-    random_roll[1] = (hash >> 1) % 6 + 1;
-    random_roll[2] = (hash >> 2) % 6 + 1;
-    random_roll[3] = (hash >> 3) % 6 + 1;
-    random_roll[4] = (hash >> 4) % 6 + 1;
-    random_roll[5] = (hash >> 5) % 6 + 1;
+    hash_combine(hash, to_hex((char *)(seed1), sizeof(seed1)));
+    hash_combine(hash, to_hex((char *)(seed2), sizeof(seed2)));
+    random_roll[1] = hash % 6 + 1;
+    hash_combine(hash, to_hex((char *)(seed1), sizeof(seed1)));
+    hash_combine(hash, to_hex((char *)(seed2), sizeof(seed2)));
+    random_roll[2] = hash % 6 + 1;
+    hash_combine(hash, to_hex((char *)(seed1), sizeof(seed1)));
+    hash_combine(hash, to_hex((char *)(seed2), sizeof(seed2)));
+    random_roll[3] = hash % 6 + 1;
+    hash_combine(hash, to_hex((char *)(seed1), sizeof(seed1)));
+    hash_combine(hash, to_hex((char *)(seed2), sizeof(seed2)));
+    random_roll[4] = hash % 6 + 1;
+    hash_combine(hash, to_hex((char *)(seed1), sizeof(seed1)));
+    hash_combine(hash, to_hex((char *)(seed2), sizeof(seed2)));
+    random_roll[5] = hash % 6 + 1;
 
+    /*
     std::ofstream outFile;
     outFile.open("bobingresult.csv", std::ios::app);
     outFile << int(random_roll[0]) << ',' << int(random_roll[1]) << ',' << int(random_roll[2]) << ',' << int(random_roll[3]) << ','
     << int(random_roll[4]) << ',' << int(random_roll[5]) << '\n';
     outFile.close();
+    */
     return 0;
+
 }
 
 bool GetRandomSeed(unsigned char &rnd, int num){
@@ -158,7 +170,7 @@ int main(int argc, char * argv[])
     int five = 0;
     int six = 0;
     int result[13] = {0};
-    int count = 1000000000;
+    int count = 100000000;
     for(int index = 0; index<count; index++) {
         if (GetRandomSeed(*seed1, 32)) {
             /*

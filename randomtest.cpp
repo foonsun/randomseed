@@ -140,7 +140,7 @@ void compute_result(uint8_t (&random_roll)[6], int32_t (&result)[13]) {
         //SANHONG
         result[8]++;
     }
-    else if(three_count == 4 || two_count == 4 || one_count == 4){
+    else if(three_count == 4 || two_count == 4 || one_count == 4 || five_count == 4 || six_count == 4){
         //SIJIN
         result[9]++;
     }
